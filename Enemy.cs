@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Eenemy : KinematicBody2D
+public class Enemy : KinematicBody2D
 
 {
     [Export] public int maxHP = 50;
