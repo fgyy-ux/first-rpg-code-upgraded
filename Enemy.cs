@@ -18,7 +18,7 @@ public class Enemy : KinematicBody2D
     public void takeDmg (int amount)  // Даём противнику способность терять здоровие, когда он принимает урон
     {
         currentHP = currentHP - amount;
-        GD.Print("Enemy HP:" = currentHP);
+        GD.Print("Enemy HP:" + currentHP);
         if (currentHP <= 0);
         Die();
     }
