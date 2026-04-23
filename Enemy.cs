@@ -20,7 +20,9 @@ public class Enemy : KinematicBody2D
         currentHP = currentHP - amount;
         GD.Print("Enemy HP:" + currentHP);
         if (currentHP <= 0);
-        Die();
+        {
+            Die();
+        }
     }
     // Создаём функцию смерти и удаление противника со сцены после смерти (безопасно удаляется, без вреда к окружению, с помощью QueueFree()
     private void Die()
