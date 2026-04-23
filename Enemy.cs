@@ -13,13 +13,13 @@ public class Enemy : KinematicBody2D
     {
         currentHP = maxHP;
         AddToGroup("enemies");
-        GD.Print("Enemy spwned. HP:" + currentHP);
+        GD.Print("Enemy spawned. HP:" + currentHP);
     }
     public void takeDmg (int amount)  // Даём противнику способность терять здоровие, когда он принимает урон
     {
         currentHP = currentHP - amount;
         GD.Print("Enemy HP:" + currentHP);
-        if (currentHP <= 0);
+        if (currentHP <= 0)
         {
             Die();
         }
@@ -30,5 +30,9 @@ public class Enemy : KinematicBody2D
         GD.Print("Enemy died.");
         QueueFree();
     }
-    
+    public override void _PhysicsProcess(float delta)
+    {
+        Vector2 velocity = new Vector2(-30, 0);
+        MoveAndSlide(velocity);
+    }
 }
