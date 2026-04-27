@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public class Player : KinematicBody2D
 
@@ -8,7 +9,8 @@ public class Player : KinematicBody2D
     private Vector2 _velocity = Vector2.Zero;
     public int maxHP = 100;
     public int currentHP = 100;
-
+    public float attackRange = 50f;
+    public int attackDmg = 10;
 
     public override void _PhysicsProcess(float delta)
     {
@@ -36,5 +38,24 @@ public class Player : KinematicBody2D
     public void Die()
     {
         GD.Print("You died");
+    }
+    public void TryAttack()
+    {
+        var enemies = GetTree().GetNodesInGroup("enemies");
+
+        foreach (Node enemyNode in enemies)
+        {
+            Enemy enemy = enemyNode as Enemy;
+            if (enemy == null)
+                continue;
+
+            float distance = GlobalPosition.DistanceTo(enemy.GlobalPosition);
+            if (distance <= attackRange)
+            {
+                enemy.takeDmg(attackDmg);
+                GD.Print("Enemy is attacked for:" + attackDmg);
+                break;
+            }
+        }
     }
 }
