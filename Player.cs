@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 public class Player : KinematicBody2D
 
