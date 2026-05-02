@@ -30,9 +30,5 @@ public class Enemy : KinematicBody2D
         GD.Print("Enemy died.");
         QueueFree();
     }
-    public override void _PhysicsProcess(float delta)
-    {
-        Vector2 velocity = new Vector2(-30, 0);
-        MoveAndSlide(velocity);
-    }
 }
+

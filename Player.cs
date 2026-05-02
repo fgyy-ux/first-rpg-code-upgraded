@@ -10,6 +10,7 @@ public class Player : KinematicBody2D
     public int currentHP = 100;
     public float attackRange = 50f;
     public int attackDmg = 10;
+    public float interactRange = 40.0f;
 
     public override void _PhysicsProcess(float delta)
     {
@@ -24,6 +25,12 @@ public class Player : KinematicBody2D
 
         // Двигаем тело
         _velocity = MoveAndSlide(_velocity);
+
+        if (Input.IsActionJustPressed("interact"))
+            {
+                TryInteract();
+            }
+
     }
     public void takeDmg(int amount)
     {
@@ -53,6 +60,25 @@ public class Player : KinematicBody2D
             {
                 enemy.takeDmg(attackDmg);
                 GD.Print("Enemy is attacked for:" + attackDmg);
+                break;
+            }
+        }
+    }
+    public void TryInteract()
+    {
+        var items = GetTree().GetNodesInGroup("items");
+
+        foreach (Node itemNode in items)
+        {
+            Item item = itemNode as Item;
+            if (item == null)
+            continue;
+
+            float distance = GlobalPosition.DistanceTo(item.GlobalPosition);
+            if (distance <= interactRange && item.canPickUp)
+            {
+                GD.Print("You picked up a new item:" + item.ItemName);
+                item.QueueFree();
                 break;
             }
         }

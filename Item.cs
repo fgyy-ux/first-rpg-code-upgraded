@@ -7,19 +7,22 @@ public class Item : Area2D
     [Export] public string ItemName = "Coin";
     [Export] public bool canPickUp = true;
     [Export] public float interactRange = 40.0f;
-    [Export] public int healAmount = 0;
 
+    public override void _Ready()
+    {
+        AddToGroup("items");
+    }
     public void TryInteract(Player player)
     {
-        if (player == null)
+        if (player == null) return;
         {
-            if (canPickUp == false)
+            if (canPickUp == true)
             {
                 float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
-                if (interactRange <= 40.0)
+                if (distance <= interactRange)
                 {
                     canPickUp = true;
-                    GD.Print("You picked up a new item: Coin" + ItemName);
+                    GD.Print("You picked up a new item:" + ItemName);
                     QueueFree();
                 }
             }
