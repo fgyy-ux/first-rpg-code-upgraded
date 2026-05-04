@@ -2,33 +2,86 @@ using Godot;
 using System;
 
 public class Enemy : KinematicBody2D
-
 {
     [Export] public int maxHP = 50;
+
+    public float Speed = 100.0f;
+    public float StopDistance = 5.0f;
+    public float SightRange = 250.0f;
+    public float SpotTimeChase = 7.0f;
+    public float SpotDecaySpeed = 2.0f;
+    public float TouchDistance = 50.0f;
+
     private int currentHP;
+    private Player player;
+    private Vector2 velocity = Vector2.Zero;
+    private float spotMeter = 0.0f;
+    private bool isChasing = false;
 
-
-    // Создаём противника, придаём значения здоровия и добавляем в группу противников
     public override void _Ready()
     {
+        player = GetParent().GetNode<Player>("Player");
         currentHP = maxHP;
         AddToGroup("enemies");
         GD.Print("Enemy spawned. HP:" + currentHP);
     }
-    public void takeDmg (int amount)  // Даём противнику способность терять здоровие, когда он принимает урон
+
+    public override void _PhysicsProcess(float delta)
+    {
+        if (player == null)
+            return;
+ 
+        float distanceToPlayer =GlobalPosition.DistanceTo(player.GlobalPosition);
+        if (distanceToPlayer <= TouchDistance)
+        {
+            GetTree().ReloadCurrentScene();
+        }
+
+        if (distanceToPlayer <= SightRange)
+        {
+            spotMeter += delta;
+
+            if (spotMeter >= SpotTimeChase)
+            {
+                isChasing = true;
+            }
+        }
+        else
+        {
+            spotMeter -= delta * SpotDecaySpeed;
+
+            if (spotMeter < 0)
+            {
+                spotMeter = 0;
+            }
+        }
+
+        if (isChasing && distanceToPlayer > StopDistance)
+        {
+            Vector2 direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+            velocity = direction * Speed;
+            velocity = MoveAndSlide(velocity);
+        }
+        else
+        {
+            velocity = Vector2.Zero;
+        }
+    }
+
+    public void takeDmg(int amount)
     {
         currentHP = currentHP - amount;
         GD.Print("Enemy HP:" + currentHP);
+
         if (currentHP <= 0)
         {
             Die();
         }
     }
-    // Создаём функцию смерти и удаление противника со сцены после смерти (безопасно удаляется, без вреда к окружению, с помощью QueueFree()
+
     private void Die()
     {
         GD.Print("Enemy died.");
         QueueFree();
     }
 }
-
