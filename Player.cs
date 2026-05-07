@@ -15,6 +15,14 @@ public class Player : KinematicBody2D
     public float AttackCooldown = 2.0f;
     private float AttackTimer = 0f;
 
+    private TextureProgress hpBar;
+
+    public override void _Ready()
+    {
+        hpBar = GetTree().Root
+        .GetNode<TextureProgress>("World/CanvasLayer/GameUI/HealthBar");
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         Vector2 input = Vector2.Zero;
@@ -43,6 +51,7 @@ public class Player : KinematicBody2D
     public void takeDmg(int amount)
     {
         currentHP -= amount;
+        hpBar.Value = currentHP;
         GD.Print("HP:" + currentHP);
         if (currentHP <= 0)
         {
