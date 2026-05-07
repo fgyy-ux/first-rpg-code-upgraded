@@ -117,6 +117,9 @@ tile_data = PoolIntArray( -524304, 1, 0, -524303, 1, 0, -524302, 1, 0, -524301, 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 142, 59 )
 
+[node name="Enemy2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 113, -103 )
+
 [node name="Item" parent="." instance=ExtResource( 6 )]
 position = Vector2( 319, -204 )
 script = ExtResource( 7 )

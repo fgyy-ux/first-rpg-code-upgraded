@@ -18,6 +18,11 @@ public class Enemy : KinematicBody2D
     private float spotMeter = 0.0f;
     private bool isChasing = false;
 
+    public float AttackRange = 25.0f;
+    public int AttackDmg = 20;
+    public float AttackCooldown = 2.0f;
+    private float AttackTimer = 0.0f;
+
     public override void _Ready()
     {
         player = GetParent().GetNode<Player>("Player");
@@ -31,12 +36,10 @@ public class Enemy : KinematicBody2D
         if (player == null)
             return;
  
-        float distanceToPlayer =GlobalPosition.DistanceTo(player.GlobalPosition);
-        if (distanceToPlayer <= TouchDistance)
-        {
-            GetTree().ReloadCurrentScene();
-        }
+        float distanceToPlayer = GlobalPosition.DistanceTo(player.GlobalPosition);
 
+        AttackTimer -= delta;
+        
         if (distanceToPlayer <= SightRange)
         {
             spotMeter += delta;
@@ -61,6 +64,12 @@ public class Enemy : KinematicBody2D
             Vector2 direction = GlobalPosition.DirectionTo(player.GlobalPosition);
             velocity = direction * Speed;
             velocity = MoveAndSlide(velocity);
+
+            if (distanceToPlayer <= AttackRange && AttackTimer <= 0)
+            {
+                AttackPlayer();
+                AttackTimer = AttackCooldown;
+            }
         }
         else
         {
@@ -83,5 +92,21 @@ public class Enemy : KinematicBody2D
     {
         GD.Print("Enemy died.");
         QueueFree();
+    }
+    private void AttackPlayer()
+    {
+        if (player == null)
+        return;
+
+        float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
+        if (distance <= AttackRange)
+        {
+            player.takeDmg(AttackDmg);
+            GD.Print("You got attacked: " + AttackDmg);
+            if (player.currentHP <= 0)
+            {
+                GetTree().ReloadCurrentScene();
+            }
+        }
     }
 }

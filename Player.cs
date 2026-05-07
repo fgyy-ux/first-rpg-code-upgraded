@@ -8,14 +8,18 @@ public class Player : KinematicBody2D
     private Vector2 _velocity = Vector2.Zero;
     public int maxHP = 100;
     public int currentHP = 100;
-    public float attackRange = 50f;
+    public float attackRange = 80f;
     public int attackDmg = 10;
     public float interactRange = 40.0f;
+
+    public float AttackCooldown = 2.0f;
+    private float AttackTimer = 0f;
 
     public override void _PhysicsProcess(float delta)
     {
         Vector2 input = Vector2.Zero;
         
+        AttackTimer -= delta;
         // Используем стандартные стрелочки Godot
         input.x = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
         input.y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
@@ -30,7 +34,11 @@ public class Player : KinematicBody2D
             {
                 TryInteract();
             }
-
+        if (Input.IsActionJustPressed("attack") && AttackTimer <= 0)
+        {
+          TryAttack();
+          AttackTimer = AttackCooldown;
+        }
     }
     public void takeDmg(int amount)
     {
@@ -59,7 +67,7 @@ public class Player : KinematicBody2D
             if (distance <= attackRange)
             {
                 enemy.takeDmg(attackDmg);
-                GD.Print("Enemy is attacked for:" + attackDmg);
+                GD.Print("Enemy is attacked for: " + attackDmg);
                 break;
             }
         }

@@ -22,7 +22,7 @@ public class Item : Area2D
                 if (distance <= interactRange)
                 {
                     canPickUp = true;
-                    GD.Print("You picked up a new item:" + ItemName);
+                    GD.Print("You picked up a new item: " + ItemName);
                     QueueFree();
                 }
             }
