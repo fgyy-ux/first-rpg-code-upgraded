@@ -15,12 +15,12 @@ public class Player : KinematicBody2D
     public float AttackCooldown = 2.0f;
     private float AttackTimer = 0f;
 
-    private TextureProgress hpBar;
+    private ProgressBar hpBar;
 
     public override void _Ready()
     {
         hpBar = GetTree().Root
-        .GetNode<TextureProgress>("World/CanvasLayer/GameUI/HealthBar");
+        .GetNode<ProgressBar>("World/CanvasLayer/GameUI/HealthBar");
     }
 
     public override void _PhysicsProcess(float delta)

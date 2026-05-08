@@ -1,6 +1,6 @@
 using Godot;
 
-public class HealthBar : TextureProgress
+public class HealthBar : ProgressBar
 {
     public Player player;
     public override void _Process(float delta)

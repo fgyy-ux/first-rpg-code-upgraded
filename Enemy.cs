@@ -23,8 +23,15 @@ public class Enemy : KinematicBody2D
     public float AttackCooldown = 2.0f;
     private float AttackTimer = 0.0f;
 
+    private ProgressBar hpBar;
+
+
     public override void _Ready()
     {
+        hpBar = GetNode<ProgressBar>("HealthBar");
+        hpBar.MaxValue = maxHP;
+        hpBar.Value = currentHP;
+
         player = GetParent().GetNode<Player>("Player");
         currentHP = maxHP;
         AddToGroup("enemies");
@@ -80,7 +87,7 @@ public class Enemy : KinematicBody2D
     public void takeDmg(int amount)
     {
         currentHP = currentHP - amount;
-        GD.Print("Enemy HP:" + currentHP);
+        GD.Print("Enemy HP: " + currentHP);
 
         if (currentHP <= 0)
         {
