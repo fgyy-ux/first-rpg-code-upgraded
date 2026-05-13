@@ -33,7 +33,7 @@ public class Enemy : KinematicBody2D
         hpBar.Value = currentHP;
 
         AddToGroup("enemies");
-        GD.Print("Enemy spawned. HP:" + currentHP);
+        GD.Print("Enemy spawned. HP: " + currentHP);
     }
 
     public override void _PhysicsProcess(float delta)

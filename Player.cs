@@ -16,11 +16,18 @@ public class Player : KinematicBody2D
     private float AttackTimer = 0f;
 
     private ProgressBar hpBar;
+    private ProgressBar staminaBar;
+    public float maxStamina = 100.0f;
+    public float currentStamina = 100.0f;
+    public float attackStaminaCost = 40.0f;
+    public float staminaRegen = 5.0f; 
 
     public override void _Ready()
     {
         hpBar = GetTree().Root
         .GetNode<ProgressBar>("World/CanvasLayer/GameUI/HealthBar");
+        staminaBar = GetTree().Root
+        .GetNode<ProgressBar>("World/CanvasLayer/GameUI/StaminaBar");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -28,6 +35,15 @@ public class Player : KinematicBody2D
         Vector2 input = Vector2.Zero;
         
         AttackTimer -= delta;
+        currentStamina += staminaRegen * delta;
+        
+        if (currentStamina > maxStamina)
+        {
+            currentStamina = maxStamina;
+        }
+
+        staminaBar.Value = currentStamina;
+
         // Используем стандартные стрелочки Godot
         input.x = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
         input.y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
@@ -44,8 +60,16 @@ public class Player : KinematicBody2D
             }
         if (Input.IsActionJustPressed("attack") && AttackTimer <= 0)
         {
-          TryAttack();
-          AttackTimer = AttackCooldown;
+            if (currentStamina < attackStaminaCost)
+            {
+                GD.Print("Not enough stamina");
+                return;
+            }
+            currentStamina -= attackStaminaCost;
+            staminaBar.Value = currentStamina;
+
+            TryAttack();
+            AttackTimer = AttackCooldown;
         }
     }
     public void takeDmg(int amount)
@@ -94,7 +118,7 @@ public class Player : KinematicBody2D
             float distance = GlobalPosition.DistanceTo(item.GlobalPosition);
             if (distance <= interactRange && item.canPickUp)
             {
-                GD.Print("You picked up a new item:" + item.ItemName);
+                GD.Print("You picked up a new item: " + item.ItemName);
                 item.QueueFree();
                 break;
             }
