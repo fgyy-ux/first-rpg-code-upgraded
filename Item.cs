@@ -1,10 +1,9 @@
 using Godot;
-using System;
-using System.Net;
 
 public class Item : Area2D
 {
-    [Export] public string ItemName = "Coin";
+    [Export] public ItemData Data;
+    [Export] public int Amount = 1;
     [Export] public bool canPickUp = true;
     [Export] public float interactRange = 40.0f;
 
@@ -12,21 +11,4 @@ public class Item : Area2D
     {
         AddToGroup("items");
     }
-    public void TryInteract(Player player)
-    {
-        if (player == null) return;
-        {
-            if (canPickUp == true)
-            {
-                float distance = GlobalPosition.DistanceTo(player.GlobalPosition);
-                if (distance <= interactRange)
-                {
-                    canPickUp = true;
-                    GD.Print("You picked up a new item: " + ItemName);
-                    QueueFree();
-                }
-            }
-        }
-    }
 }
-

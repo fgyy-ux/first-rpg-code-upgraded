@@ -22,12 +22,17 @@ public class Player : KinematicBody2D
     public float attackStaminaCost = 40.0f;
     public float staminaRegen = 5.0f; 
 
+    private Inventory inventory;
+
     public override void _Ready()
     {
         hpBar = GetTree().Root
         .GetNode<ProgressBar>("World/CanvasLayer/GameUI/HealthBar");
+
         staminaBar = GetTree().Root
         .GetNode<ProgressBar>("World/CanvasLayer/GameUI/StaminaBar");
+
+        inventory = GetNode<Inventory>("Inventory");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -118,9 +123,15 @@ public class Player : KinematicBody2D
             float distance = GlobalPosition.DistanceTo(item.GlobalPosition);
             if (distance <= interactRange && item.canPickUp)
             {
-                GD.Print("You picked up a new item: " + item.ItemName);
-                item.QueueFree();
-                break;
+                if (inventory.AddItem(item.Data, item.Amount))
+                {
+                    GD.Print("Picked up: " + item.Data.DisplayName);
+                    item.QueueFree();
+                }
+                else
+                {
+                    GD.Print("Inventory full.");
+                }
             }
         }
     }
