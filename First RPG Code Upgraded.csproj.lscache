@@ -1,0 +1,85 @@
+version=1
+
+# This file caches language service data to improve the performance of C# Dev Kit.
+# It is not intended for manual editing. It can safely be deleted and will be
+# regenerated automatically. For more information, see https://aka.ms/lscache
+#
+# To control where cache files are stored, use the following VS Code setting:
+#   "dotnet.projectsystem.cacheInProjectFolder": true
+
+[project]
+language=C#
+primary
+lastDtbSucceeded
+
+[properties]
+AssemblyName=First RPG Code Upgraded
+CommandLineArgsForDesignTimeEvaluation=-langversion:7.3 -define:GODOT;GODOT_WINDOWS;GODOT_PC;TRACE;TOOLS
+CompilerGeneratedFilesOutputPath=
+MaxSupportedLangVersion=7.3
+ProjectAssetsFile=<PATH>.mono/temp/obj/project.assets.json
+RootNamespace=FirstRPGCodeUpgraded
+RunAnalyzers=
+RunAnalyzersDuringLiveAnalysis=
+SolutionPath=<PATH>First RPG Code Upgraded.sln
+TargetFrameworkIdentifier=.NETFramework
+TargetPath=<PATH>.mono/temp/bin/Debug/First RPG Code Upgraded.dll
+TargetRefPath=
+TemporaryDependencyNodeTargetIdentifier=net472
+
+[commandLineArguments]
+/noconfig
+/unsafe-
+/checked-
+/nowarn:1701,1702,1701,1702
+/fullpaths
+/nostdlib+
+/errorreport:prompt
+/warn:4
+/define:GODOT;GODOT_WINDOWS;GODOT_PC;TRACE;TOOLS;DEBUG;NETFRAMEWORK;NET472;NET20_OR_GREATER;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER
+/highentropyva+
+/debug+
+/debug:portable
+/filealign:512
+/optimize-
+/out:"<PATH>.mono/temp/obj/Debug/First RPG Code Upgraded.dll"
+/subsystemversion:6.00
+/target:library
+/warnaserror-
+/utf8output
+/deterministic+
+/langversion:7.3
+/warnaserror+:NU1605
+
+[sourceFiles]
+.mono/temp/obj/Debug/
+ .NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+ First RPG Code Upgraded.AssemblyInfo.cs
+Enemy.cs
+HealthBar.cs
+Inventory.cs
+InventorySlot.cs
+Item.cs
+ItemData.cs
+Player.cs
+StaminaBar.cs
+
+[metadataReferences]
+.mono/assemblies/Debug/
+ GodotSharp.dll
+ GodotSharpEditor.dll
+<NUGET>/microsoft.netframework.referenceassemblies.net472/1.0.3/build/.NETFramework/v4.7.2/
+ Facades/netstandard.dll
+ mscorlib.dll
+ System.Core.dll
+ System.Data.dll
+ System.dll
+ System.Drawing.dll
+ System.IO.Compression.FileSystem.dll
+ System.Numerics.dll
+ System.Runtime.Serialization.dll
+ System.Xml.dll
+ System.Xml.Linq.dll
+
+[analyzerConfigFiles]
+.mono/temp/obj/Debug/First RPG Code Upgraded.GeneratedMSBuildEditorConfig.editorconfig

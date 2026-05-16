@@ -17,6 +17,47 @@ public class Inventory : Node
 
     public bool AddItem(ItemData item, int amount)
     {
+        if (item == null || amount <= 0)
+        {
+            return false;
+        }
+
+        if (item.Stackable)
+        {
+            foreach (InventorySlot slot in Slots)
+            {
+                if (!slot.IsEmpty)
+                {
+                    if (slot.Item.Id == item.Id)
+                    {
+                        if (slot.Amount < item.MaxStack)
+                        {
+                            int spaceLeft = item.MaxStack - slot.Amount;
+                            int amountToAdd = Mathf.Min(spaceLeft, amount);
+
+                            slot.Amount += amountToAdd;
+                            amount -= amountToAdd;
+
+                            if (amount <= 0)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach (InventorySlot slot in Slots)
+        {
+            if (slot.IsEmpty)
+            {
+                slot.Item = item;
+                slot.Amount = amount;
+                return true;
+            }
+        }
+
         return false;
     }
 }
