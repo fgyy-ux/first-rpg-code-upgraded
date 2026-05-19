@@ -53,8 +53,28 @@ public class Inventory : Node
             if (slot.IsEmpty)
             {
                 slot.Item = item;
-                slot.Amount = amount;
-                return true;
+                
+                if(item.Stackable)
+                {
+                    int amountToAdd = Mathf.Min(item.MaxStack, amount);
+                    slot.Amount = amountToAdd;
+                    amount -= amountToAdd;
+
+                    if (amount <= 0)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    slot.Amount = 1;
+                    amount--;
+
+                    if (amount <= 0)
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
