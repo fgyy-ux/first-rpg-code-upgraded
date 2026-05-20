@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Inventory : Node
 {
-    [Export] public int Size = 20;
+    [Export] public int Size = 10;
 
     public List<InventorySlot> Slots = new List<InventorySlot>();
 
@@ -18,6 +18,32 @@ public class Inventory : Node
     public bool AddItem(ItemData item, int amount)
     {
         if (item == null || amount <= 0)
+        {
+            return false;
+        }
+
+        int availableSpace = 0;
+
+        foreach (InventorySlot slot in Slots)
+        {
+            if (slot.IsEmpty)
+            {
+                if (item.Stackable)
+                {
+                    availableSpace += item.MaxStack;
+                }
+                else
+                {
+                    availableSpace += 1;
+                }
+            }
+            else if (item.Stackable && slot.Item.Id == item.Id)
+            {
+                availableSpace += item.MaxStack - slot.Amount;
+            }
+        }
+
+        if (availableSpace < amount)
         {
             return false;
         }
@@ -54,7 +80,7 @@ public class Inventory : Node
             {
                 slot.Item = item;
                 
-                if(item.Stackable)
+                if (item.Stackable)
                 {
                     int amountToAdd = Mathf.Min(item.MaxStack, amount);
                     slot.Amount = amountToAdd;
