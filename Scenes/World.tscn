@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player.cs" type="Script" id=1]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Area2D.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Item.cs" type="Script" id=7]
 [ext_resource path="res://GameUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Coin.tres" type="Resource" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -124,6 +125,8 @@ position = Vector2( 113, -103 )
 [node name="Item" parent="." instance=ExtResource( 6 )]
 position = Vector2( 319, -204 )
 script = ExtResource( 7 )
+Data = ExtResource( 9 )
+Amount = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
