@@ -2,11 +2,13 @@ using Godot;
 
 public partial class InventoryUI : Control
 {
-    [Export] public Inventory PlayerInventory;
+    public Inventory PlayerInventory;
     [Export] public PackedScene SlotPreFab;
 
     public override void _Ready()
     {
+        PlayerInventory = GetNode<Inventory>("../TestInventory");
+
         if (PlayerInventory == null)
         {
             GD.PrintErr("PlayerInventory is not assigned in InventoryUI.");

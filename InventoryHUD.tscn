@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://InventoryUI.cs" type="Script" id=1]
+[ext_resource path="res://Inventory.cs" type="Script" id=2]
+[ext_resource path="res://SlotPreFab.tscn" type="PackedScene" id=3]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -8,6 +10,7 @@
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
+SlotPreFab = ExtResource( 3 )
 
 [node name="PanelContainer" type="PanelContainer" parent="InventoryUI"]
 margin_right = 14.0
@@ -22,3 +25,6 @@ margin_bottom = 7.0
 
 [node name="GridContainer" type="GridContainer" parent="InventoryUI/PanelContainer/ScrollContainer"]
 columns = 10
+
+[node name="TestInventory" type="Node" parent="."]
+script = ExtResource( 2 )
