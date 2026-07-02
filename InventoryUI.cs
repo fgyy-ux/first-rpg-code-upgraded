@@ -3,11 +3,13 @@ using Godot;
 public partial class InventoryUI : Control
 {
     public Inventory PlayerInventory;
-    [Export] public PackedScene SlotPreFab;
+    public PackedScene SlotPreFab;
 
     public override void _Ready()
     {
         PlayerInventory = GetNode<Inventory>("../TestInventory");
+
+        SlotPreFab = GD.Load<PackedScene>("res://InventorySlot.tscn");
 
         if (PlayerInventory == null)
         {
