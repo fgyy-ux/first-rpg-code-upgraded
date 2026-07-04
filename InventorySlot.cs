@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class InventorySlot : Control
+public class InventorySlot : Panel
 {
     public ItemData Item;
     public int Amount;

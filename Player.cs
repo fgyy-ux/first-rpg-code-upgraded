@@ -121,7 +121,7 @@ public class Player : KinematicBody2D
             continue;
 
             float distance = GlobalPosition.DistanceTo(item.GlobalPosition);
-            if (distance <= interactRange && item.canPickUp)
+            if (distance <= interactRange && item.CanPickUp)
             {
                 if (inventory.AddItem(item.Data, item.Amount))
                 {

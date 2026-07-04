@@ -1,15 +1,18 @@
 using Godot;
 
-public partial class InventoryUI : Control
+public class InventoryUI : Control
 {
     public Inventory PlayerInventory;
     public PackedScene SlotPreFab;
+    public Control GridContainer;
 
     public override void _Ready()
     {
-        PlayerInventory = GetNode<Inventory>("../TestInventory");
+        PlayerInventory = GetNode<Inventory>("/root/World/Player/Inventory");
 
         SlotPreFab = GD.Load<PackedScene>("res://InventorySlot.tscn");
+
+        GridContainer = GetNode<Control>("/root/World/CanvasLayer/CanvasLayer/InventoryUI");
 
         if (PlayerInventory == null)
         {
@@ -25,16 +28,14 @@ public partial class InventoryUI : Control
 
         for (int i = 0; i < PlayerInventory.Size; i++)
         {
-            var slotInstance = SlotPreFab.Instance() as InventorySlot;
-            if (slotInstance == null)
-            {
-                GD.PrintErr("The assigned slot prefab does not contain an InventorySlot root node.");
-                return;
-            }
-
-            slotInstance.SlotIndex = i;
-            slotInstance.PlayerInventory = PlayerInventory;
-            AddChild(slotInstance);
+           object rawInstance = SlotPreFab.Instance();
+           GD.Print($"[DEBUG] Godot returned instance of type: {rawInstance.GetType()}");
+           InventorySlot slotInstance = rawInstance as InventorySlot;
+           if (slotInstance == null)
+           {
+               GD.PrintErr("Failed to cast the instance to InventorySlot.");
+               return;
+           }
         }
     }
 }

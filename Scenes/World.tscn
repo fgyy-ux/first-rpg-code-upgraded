@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player.cs" type="Script" id=1]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://GameUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Coin.tres" type="Resource" id=9]
 [ext_resource path="res://InventoryHUD.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Inventory.cs" type="Script" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -110,6 +111,14 @@ shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
+
+[node name="Inventory" type="Node" parent="Player"]
+script = ExtResource( 11 )
+
+[node name="GridContainer" type="GridContainer" parent="Player/Inventory"]
+margin_right = 40.0
+margin_bottom = 40.0
+columns = 10
 
 [node name="TileMap" parent="." instance=ExtResource( 3 )]
 z_index = -1
