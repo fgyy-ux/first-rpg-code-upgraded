@@ -12,7 +12,7 @@ public class InventoryUI : Control
 
         SlotPreFab = GD.Load<PackedScene>("res://InventorySlot.tscn");
 
-        GridContainer = GetNode<Control>("/root/World/CanvasLayer/CanvasLayer/InventoryUI");
+        GridContainer = GetNode<Control>("/root/World/CanvasLayer/InventoryHUD/InventoryUI/PanelContainer/ScrollContainer/GridContainer");
 
         if (PlayerInventory == null)
         {
@@ -26,16 +26,20 @@ public class InventoryUI : Control
             return;
         }
 
+        GD.Print($"[DEBUG] Initializing inventory UI with {PlayerInventory.Size} slots.");
         for (int i = 0; i < PlayerInventory.Size; i++)
         {
-           object rawInstance = SlotPreFab.Instance();
-           GD.Print($"[DEBUG] Godot returned instance of type: {rawInstance.GetType()}");
-           InventorySlot slotInstance = rawInstance as InventorySlot;
-           if (slotInstance == null)
-           {
-               GD.PrintErr("Failed to cast the instance to InventorySlot.");
-               return;
-           }
+            var slotInstance = SlotPreFab.Instance() as InventorySlot;
+
+            if (slotInstance != null)
+            {
+                slotInstance.SlotIndex = i;
+                   GridContainer.AddChild(slotInstance);
+            }
+            else
+            {
+                GD.PrintErr("Failed to instance InventorySlot from SlotPreFab.");
+            }
         }
     }
 }

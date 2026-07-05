@@ -141,4 +141,4 @@ Data = ExtResource( 9 )
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
-[node name="CanvasLayer" parent="CanvasLayer" instance=ExtResource( 10 )]
+[node name="InventoryHUD" parent="CanvasLayer" instance=ExtResource( 10 )]
